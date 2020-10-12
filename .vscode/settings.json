@@ -4,6 +4,7 @@
     "babeljs",
     "browserslist",
     "esnext",
+    "openstreetmap",
     "tipagem",
     "unregister"
   ]
