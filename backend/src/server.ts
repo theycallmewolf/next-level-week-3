@@ -1,30 +1,47 @@
 import express from 'express';
+import { getRepository } from 'typeorm';
+import Orphanages from './models/Orphanages';
+
 import './database/connection';
 
 const app = express();
 app.use(express.json());
 
-// rota = conjunto
-// recurso = users
+// app.get('/users/:id', (request, response)=>{
+//   console.log(request.query)
+//   console.log(request.params)
+//   console.log(request.body)
+//   return response.json({ message: 'Hello Wolf' });
+// });
 
-// métodos HTTP = GET, POST, PUT, DELETE
-// // GET - obter dados (default do browser)
-// // POST - guardar dados novos
-// // PUT - editar dados
-// // DELETE - apagar dados
+app.post('/orphanages', async (request, response) => {
+  // console.log(request.body);
+  const {
+    name,
+    latitude,
+    longitude,
+    about,
+    instructions,
+    opening_hours,
+    open_on_weekends
+  } = request.body;
 
-// parâmetros
-// // Query params: http://localhost:3333/users?search=wolf
-// // Route params: http://localhost:3333/users/1 (identificar um recurso)
-// // Body: corpo da requisição - serve para enviar dados que não caibam nos query ou route params
+  const orphanagesRepository = getRepository(Orphanages);
 
+  const orphanage = orphanagesRepository.create({
+    name,
+    latitude,
+    longitude,
+    about,
+    instructions,
+    opening_hours,
+    open_on_weekends
+  })
 
-app.post('/users/:id', (request, response)=>{
-  console.log(request.query)
-  console.log(request.params)
-  console.log(request.body)
-  return response.json({ message: 'Hello Wolf' });
-});
+  await orphanagesRepository.save(orphanage);
+
+  return response.status(201).json({orphanage});
+})
 
 app.listen(3333)
 // localhost:3333
