@@ -5,12 +5,20 @@ import Orphanages from '../models/Orphanages';
 export default {
 
   // common methods: index, show, create, update and delete
-  
+
   // list orphanages
   async index(request: Request, response: Response){
     const orphanagesRepository = getRepository(Orphanages);
     const orphanages = await orphanagesRepository.find();
     return response.json(orphanages);
+  },
+  
+  // show orphanage
+  async show(request: Request, response: Response){
+    const { id } = request.params; // o 'id' vem do routes.get('/orphanages/:id'...
+    const orphanagesRepository = getRepository(Orphanages);
+    const orphanage = await orphanagesRepository.findOneOrFail(id);
+    return response.json(orphanage);
   },
 
   // create new orphanage
