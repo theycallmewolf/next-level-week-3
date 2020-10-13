@@ -1,6 +1,5 @@
 import { Router } from 'express';
-import { getRepository } from 'typeorm';
-import Orphanages from './models/Orphanages';
+import OrphanagesController from './controllers/OrphanagesController';
 
 const routes = Router();
 
@@ -11,34 +10,7 @@ const routes = Router();
 //   return response.json({ message: 'Hello Wolf' });
 // });
 
-routes.post('/orphanages', async (request, response) => {
-  // console.log(request.body);
-  const {
-    name,
-    latitude,
-    longitude,
-    about,
-    instructions,
-    opening_hours,
-    open_on_weekends
-  } = request.body;
-
-  const orphanagesRepository = getRepository(Orphanages);
-
-  const orphanage = orphanagesRepository.create({
-    name,
-    latitude,
-    longitude,
-    about,
-    instructions,
-    opening_hours,
-    open_on_weekends
-  })
-
-  await orphanagesRepository.save(orphanage);
-
-  return response.status(201).json({orphanage});
-})
+routes.post('/orphanages', OrphanagesController.create);
 
 export default routes;
 
