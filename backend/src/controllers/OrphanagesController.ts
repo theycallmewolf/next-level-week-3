@@ -54,7 +54,7 @@ export default {
       about,
       instructions,
       opening_hours,
-      open_on_weekends,
+      open_on_weekends : open_on_weekends === 'true',
       images
     };
 
@@ -70,6 +70,9 @@ export default {
         path: Yup.string().required()
       }))
     });
+
+    const finalData = schema.cast(data); 
+    // o cast trata os dados convertendo para boolean uma string como 'true'
  
     await schema.validate(data, {
       abortEarly: false // false, will report the validation errors on all fields and not the first error that appears
