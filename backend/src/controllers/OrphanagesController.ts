@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import OrphanageView from '../views/OrphanagesView';
-import Orphanages from '../models/Orphanages';
+import OrphanageView from '../views/orphanages_view';
+import Orphanages from '../models/Orphanage';
 
 export default {
 
