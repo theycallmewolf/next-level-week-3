@@ -1,25 +1,78 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, View, ScrollView, Text, StyleSheet, Dimensions } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { Feather, FontAwesome } from '@expo/vector-icons';
+import { useRoute } from '@react-navigation/native'
 
 import mapMarkerImg from '../images/map-marker.png';
 import { RectButton } from 'react-native-gesture-handler';
+import api from '../services/api';
+
+interface OrphanageDetailsRouteParams {
+  id: number;
+}
+
+interface orphanage {
+  id: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+  about: string;
+  instructions: string;
+  opening_hours: string;
+  open_on_weekends: string;
+  images: Array<{
+    id: number;
+    url: string;
+  }>
+}
 
 export default function OrphanageDetails() {
+
+  const route = useRoute();
+  const [ orphanage, setOrphanage ] = useState<orphanage>();
+
+  const params = route.params as OrphanageDetailsRouteParams;
+  console.log(params.id);
+
+  useEffect(()=>{
+    api.get(`orphanages/${params.id}`).then(response => {
+      setOrphanage(response.data);
+    });
+  }, [params.id]); //good practice: place all variables used inside the useEffect inside the array
+
+  if(!orphanage) {
+    return(
+      <View>
+        <Text style={styles.description}>
+          A carregar a informação...
+        </Text>
+      </View>
+    )
+  }
+
+  console.log(orphanage.id);
+  console.log(orphanage.images);
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.imagesContainer}>
         <ScrollView horizontal pagingEnabled>
-          <Image style={styles.image} source={{ uri: 'https://fmnova.com.br/images/noticias/safe_image.jpg' }} />
-          <Image style={styles.image} source={{ uri: 'https://fmnova.com.br/images/noticias/safe_image.jpg' }} />
-          <Image style={styles.image} source={{ uri: 'https://fmnova.com.br/images/noticias/safe_image.jpg' }} />
+          { orphanage.images.map(image => {
+            return(
+              <Image 
+                key={image.id}
+                source={{ uri: image.url }} 
+                style={styles.image}
+              />
+            );
+          }) }
         </ScrollView>
       </View>
 
       <View style={styles.detailsContainer}>
-        <Text style={styles.title}>Orf. Esperança</Text>
-        <Text style={styles.description}>Presta assistência a crianças de 06 a 15 anos que se encontre em situação de risco e/ou vulnerabilidade social.</Text>
+        <Text style={styles.title}>{orphanage.name}</Text>
+        <Text style={styles.description}>{orphanage.about}</Text>
       
         <View style={styles.mapContainer}>
           <MapView 
@@ -52,23 +105,30 @@ export default function OrphanageDetails() {
         <View style={styles.separator} />
 
         <Text style={styles.title}>Instruções para visita</Text>
-        <Text style={styles.description}>Venha como se sentir a vontade e traga muito amor e paciência para dar.</Text>
+            <Text style={styles.description}>{orphanage.instructions}</Text>
 
         <View style={styles.scheduleContainer}>
           <View style={[styles.scheduleItem, styles.scheduleItemBlue]}>
             <Feather name="clock" size={40} color="#2AB5D1" />
-            <Text style={[styles.scheduleText, styles.scheduleTextBlue]}>Segunda à Sexta 8h às 18h</Text>
+            <Text style={[styles.scheduleText, styles.scheduleTextBlue]}>Segunda à Sexta {orphanage.opening_hours}</Text>
           </View>
-          <View style={[styles.scheduleItem, styles.scheduleItemGreen]}>
-            <Feather name="info" size={40} color="#39CC83" />
-            <Text style={[styles.scheduleText, styles.scheduleTextGreen]}>Atendemos fim de semana</Text>
-          </View>
+          {orphanage.open_on_weekends ? (
+            <View style={[styles.scheduleItem, styles.scheduleItemGreen]}>
+              <Feather name="info" size={40} color="#39CC83" />
+              <Text style={[styles.scheduleText, styles.scheduleTextGreen]}>Atendemos fim de semana</Text>
+            </View>
+          ) : (
+            <View style={[styles.scheduleItem, styles.scheduleItemRed]}>
+              <Feather name="info" size={40} color="#FF6690" />
+              <Text style={[styles.scheduleText, styles.scheduleTextRed]}>Não atendemos fim de semana</Text>
+            </View>
+          )}
         </View>
 
-        <RectButton style={styles.contactButton} onPress={() => {}}>
+        {/* <RectButton style={styles.contactButton} onPress={() => {}}>
           <FontAwesome name="whatsapp" size={24} color="#FFF" />
           <Text style={styles.contactButtonText}>Entrar em contato</Text>
-        </RectButton>
+        </RectButton> */}
       </View>
     </ScrollView>
   )
@@ -96,11 +156,11 @@ const styles = StyleSheet.create({
   title: {
     color: '#4D6F80',
     fontSize: 30,
-    fontFamily: 'Nunito_700Bold',
+    fontFamily: 'nunito700',
   },
 
   description: {
-    fontFamily: 'Nunito_600SemiBold',
+    fontFamily: 'nunito600',
     color: '#5c8599',
     lineHeight: 24,
     marginTop: 16,
@@ -127,7 +187,7 @@ const styles = StyleSheet.create({
   },
 
   routesText: {
-    fontFamily: 'Nunito_700Bold',
+    fontFamily: 'nunito700',
     color: '#0089a5'
   },
 
@@ -163,6 +223,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
 
+  scheduleItemRed: {
+    backgroundColor: '#FEF6F9',
+    borderWidth: 1,
+    borderColor: '#FFBCD4',
+    borderRadius: 20,
+  },
+
   scheduleText: {
     fontFamily: 'nunito600',
     fontSize: 16,
@@ -177,6 +244,9 @@ const styles = StyleSheet.create({
   scheduleTextGreen: {
     color: '#37C77F'
   },
+  scheduleTextRed: {
+    color: '#FF6690'
+  },
 
   contactButton: {
     backgroundColor: '#3CDC8C',
@@ -189,7 +259,7 @@ const styles = StyleSheet.create({
   },
 
   contactButtonText: {
-    fontFamily: 'Nunito_800ExtraBold',
+    fontFamily: 'nunito800',
     color: '#FFF',
     fontSize: 16,
     marginLeft: 16,
