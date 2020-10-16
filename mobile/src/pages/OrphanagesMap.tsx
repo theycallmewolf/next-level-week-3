@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity, TouchableOpacityComponent } from 'react-native';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import MapView from 'react-native-maps';
 import { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
