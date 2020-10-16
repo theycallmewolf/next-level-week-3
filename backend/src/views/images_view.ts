@@ -5,7 +5,8 @@ export default {
     return{
       id: image.id,
       // local
-      url: `http://localhost:3333/uploads/${image.path}`
+      // url: `http://localhost:3333/uploads/${image.path}`
+      url: `http://192.168.1.97:3333/uploads/${image.path}`
       // var ambiente
       // @see: https://blog.rocketseat.com.br/variaveis-ambiente-nodejs/
     };
