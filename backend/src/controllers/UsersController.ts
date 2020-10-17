@@ -3,6 +3,8 @@ import { getRepository } from 'typeorm';
 import User from '../models/User';
 import userView from '../views/user_view';
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 export default {
 
@@ -69,17 +71,23 @@ export default {
       email = element.email;
     });
     
-    bcrypt.compare(password, hash).then(function(result) {
+    bcrypt.compare(password, hash).then(function(result:boolean) {
       console.log(result);
         if(result){
+
+          const user = {
+            username: username, 
+            email: email,
+            password: true,
+          }
+
+          const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+
           return response.json({ 
             login: true,
             message: "user as access",
-            userData: {
-              username: username, 
-              email: email,
-              password: true,
-            }
+            userData: user,
+            token : token
           });
         }
         return response.json({ 
