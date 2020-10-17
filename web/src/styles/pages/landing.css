@@ -39,22 +39,60 @@
 	line-height: 1.2;
 }
 
-.content-wrapper .location {
-	position: absolute;
-	right: 0;
-	top: 0;
+.content-wrapper .intro {
+	position: relative;
 
-	font-size: 24;
-	line-height: 1.6;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.content-wrapper .intro img {
+	width: 300px;
+	margin-right: 10px;
+}
+
+.content-wrapper .location {
+	font-size: 24px;
+	line-height: 1.2;
+	letter-spacing: 1px;
+
+	border-left: 1px solid #fff;
+	padding-left: 10px;
 
 	display: flex;
 	flex-direction: column;
-
-	text-align: right;
 }
 
 .content-wrapper .location strong {
 	font-weight: 800;
+}
+
+.content-wrapper .btn-login {
+	position: absolute;
+	right: 0;
+	top: 0;
+
+	width: 222px;
+	height: 80px;
+	background: #12d4e0;
+	border-radius: 30px;
+
+	font-size: 20px;
+	color: #fff;
+	text-decoration: none;
+	letter-spacing: 1px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	transition: background 500ms ease-in-out, color 100ms ease-in-out;
+}
+
+.content-wrapper .btn-login:hover {
+	background: #96feff;
+	color: #15c3d6;
 }
 
 .content-wrapper .enter-app {
