@@ -1,33 +1,32 @@
-import React, {ChangeEvent, FormEvent, useState} from 'react';
+import React, { FormEvent, useState, useContext } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import AuthContext from '../contexts/auth';
 import '../styles/pages/backoffice-login.css';
 import logoImg from '../images/logo-square.svg';
 import api from "../services/api";
 
+
 function BackofficeLogin(){
 
-  const [state, setState] = useState({redirect: ''});
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [remind, setRemind] = useState(false);
+  const { login } = useContext(AuthContext);
+
+  console.log(login);
 
   async function handleSubmit(event: FormEvent){
     event.preventDefault();
 
-    const data = {
+    const loginCredentials = {
       username : username,
       password : password,
       // remind : String(remind)
     }
 
-    await api.post('user', data).then(
-      response => (
-        response.data.login ? (console.log(response.data)) : (
-             alert('oh damm!')
-          )
-        )
-      );
+    const { data } = await api.post('user', loginCredentials)
+    console.log( data )
   }
 
   return(
