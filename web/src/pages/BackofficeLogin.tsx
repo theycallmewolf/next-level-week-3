@@ -1,32 +1,22 @@
 import React, { FormEvent, useState, useContext } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import AuthContext from '../contexts/auth';
+import AuthContext from '../contexts/authContext';
 import '../styles/pages/backoffice-login.css';
 import logoImg from '../images/logo-square.svg';
-import api from "../services/api";
 
 
-function BackofficeLogin(){
+const BackofficeLogin = ( event: FormEvent ) => {
+  
+  const { login } = useContext(AuthContext);
+  // console.log( { login } );
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [remind, setRemind] = useState(false);
-  const { login } = useContext(AuthContext);
+  const [remind, setRemind] = useState( false );
 
-  console.log(login);
-
-  async function handleSubmit(event: FormEvent){
-    event.preventDefault();
-
-    const loginCredentials = {
-      username : username,
-      password : password,
-      // remind : String(remind)
-    }
-
-    const { data } = await api.post('user', loginCredentials)
-    console.log( data )
+  async function handleLogin(){
+    
   }
 
   return(
@@ -44,7 +34,7 @@ function BackofficeLogin(){
         </Link>
 
         <form 
-          onSubmit={handleSubmit}
+          onSubmit={handleLogin}
           className="login-form"
         >
           <fieldset>

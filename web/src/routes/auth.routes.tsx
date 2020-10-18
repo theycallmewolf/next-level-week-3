@@ -5,7 +5,7 @@ import Landing from '../pages/Landing';
 import Orphanage from '../pages/Orphanage';
 import CreateOrphanage from '../pages/CreateOrphanage';
 import OrphanagesMap from '../pages/OrphanagesMap';
-import LogIn from '../pages/BackofficeLogin';
+import BackofficeLogin from '../pages/BackofficeLogin';
 
 export default function AuthRoutes() {
   return(
@@ -14,8 +14,8 @@ export default function AuthRoutes() {
         <Route path="/" exact component={Landing} />
         <Route path="/map" component={OrphanagesMap} />
         <Route path="/orphanages/create" component={CreateOrphanage} />
-          <Route path="/orphanages/:id" component={Orphanage} />
-        <Route path="/login" component={LogIn} />
+        <Route path="/orphanages/:id" component={Orphanage} />
+        <Route path="/login" component={BackofficeLogin} />
       </Switch>
     </BrowserRouter>
   )

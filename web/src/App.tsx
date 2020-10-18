@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {FormEvent} from 'react';
 import './styles/global.css';
 import 'leaflet/dist/leaflet.css';
 import Routes from './routes/';
-import { AuthProvider } from './contexts/auth'
+import { AuthProvider } from './contexts/authContext'
+
 
 function App() {
 
   return (
-    <AuthProvider>
-      <Routes />
+    <AuthProvider value={{login: false, token: '', user: {}}}>
+        <Routes />
     </AuthProvider>
   );
 }
