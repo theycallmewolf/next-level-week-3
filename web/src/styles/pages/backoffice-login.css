@@ -1,0 +1,156 @@
+.content-wrapper {
+	width: 100vw;
+	height: 100vh;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.brand {
+	width: 60%;
+	height: 100%;
+	background: linear-gradient(329.54deg, #29b6d1 0%, #00c7c7 100%);
+
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.brand .location {
+	border: none;
+	text-align: center;
+	margin-top: 100px;
+}
+
+.form-container {
+	width: 40%;
+	height: 100%;
+
+	position: relative;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.form-container .btn-back {
+	background: #ebf2f5;
+	border-radius: 16px;
+
+	width: 48px;
+	height: 48px;
+	position: absolute;
+	top: 40px;
+	right: 40px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.form-container .btn-back svg {
+	stroke: #15c3d6;
+}
+
+.form-container .login-form {
+	width: 80%;
+	display: block;
+}
+
+.form-container .login-form fieldset {
+	border: none;
+}
+
+.form-container .login-form fieldset legend {
+	width: 100%;
+
+	font-size: 32px;
+	line-height: 34px;
+	color: #5c8599;
+	font-weight: 700;
+
+	border-bottom: 1px solid #d3e2e5;
+	margin-bottom: 40px;
+	padding-bottom: 24px;
+}
+
+.login-form .input-block {
+	margin-top: 24px;
+}
+
+.login-form label {
+	display: flex;
+	color: #8fa7b3;
+	margin-bottom: 8px;
+	line-height: 24px;
+}
+
+.login-form input {
+	width: 100%;
+	height: 64px;
+	padding: 0 16px;
+	background: #f5f8fa;
+	border: 1px solid #d3e2e5;
+	border-radius: 20px;
+	outline: none;
+	color: #5c8599;
+}
+
+.links-container {
+	margin: 20px 0;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.links-container .checkbox-block {
+	width: 50%;
+
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.login-form input[type="checkbox"] {
+	width: 24px;
+	height: 24px;
+	border-radius: 8px;
+	margin-right: 8px;
+}
+
+.login-form input[type="checkbox"] + label {
+	margin-bottom: 0;
+}
+
+.login-form .btn-link {
+	text-decoration: none;
+	color: #8fa7b3;
+	transition: color 300ms ease-in-out;
+}
+
+.login-form .btn-link:hover {
+	color: #111;
+}
+
+.login-form button {
+	margin-top: 64px;
+
+	width: 100%;
+	height: 64px;
+	border: 0;
+	cursor: pointer;
+	background: #3cdc8c;
+	border-radius: 20px;
+	color: #ffffff;
+	font-weight: 800;
+	letter-spacing: 1px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	transition: background-color 0.2s;
+}
